@@ -19,6 +19,10 @@ class CounterGroup extends Component {
       type: "GENERATECOUNTERS",
       payload: parseInt(this.refs.countInput.value)
     });
+
+    this.props.dispatch({
+      type: "CLEARSUM"
+    });
   };
 
   counterUpdateCallback = changedNum => {
