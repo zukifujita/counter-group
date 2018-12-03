@@ -4,7 +4,7 @@ import './index.css';
 import CounterGroup from './component/CounterGroup';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<CounterGroup />, document.getElementById('root'));
+ReactDOM.render(<CounterGroup defaultCount='3' />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
