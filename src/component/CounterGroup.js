@@ -26,7 +26,7 @@ class CounterGroup extends Component {
       <div>
         {this.state.counterArr.map(id => (
           <Counter
-            // key={id+1}
+            key={new Date().getTime() + Math.random}
             onCounterValueChanged={this.counterUpdateCallback}
           />
         ))}
