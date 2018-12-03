@@ -6,7 +6,7 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case "COUNTERSUM":
-      console.log(payload);
+      
       return { ...state, counterSum: state.counterSum + payload };
     case "GENERATECOUNTERS":
       return {
@@ -16,8 +16,8 @@ export default (state = initialState, { type, payload }) => {
           .map(() => ({ count: 0, id: generateID() }))
       };
     case "INCREASE":
-      console.log(state.counterArr);
-      const changedArr = state.counterArr.map(counterItem => {
+      
+      const changedIncreaseArr = state.counterArr.map(counterItem => {
         if (counterItem.id === payload.id) {
           return {
             id: payload.id,
@@ -27,8 +27,22 @@ export default (state = initialState, { type, payload }) => {
           return counterItem;
         }
       });
+      return { ...state, counterArr: [...changedIncreaseArr] };
 
-      return { ...state, counterArr: [...changedArr] };
+    case "DECREASE":
+    
+      const changedDecreaseArr = state.counterArr.map(counterItem => {
+        if (counterItem.id === payload.id) {
+          return {
+            id: payload.id,
+            count: counterItem.count - payload.changedNum
+          };
+        } else {
+          return counterItem;
+        }
+      });
+      return { ...state, counterArr: [...changedDecreaseArr] };
+      
     default:
       return state;
   }
