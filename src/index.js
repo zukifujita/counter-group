@@ -1,6 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import CounterGroup from './component/CounterGroup';
+import React from "react";
+import ReactDOM from "react-dom";
+import CounterGroup from "./component/CounterGroup";
+import reducer from "./reducer";
+import {createStore} from "redux";
+import { Provider } from "react-redux";
 
-ReactDOM.render(<CounterGroup defaultCount='3' />, document.getElementById('root'));
+const store = createStore(reducer);
 
+ReactDOM.render(
+  <Provider store={store}>
+    <CounterGroup defaultCount="3" />
+  </Provider>,
+  document.getElementById("root")
+);
