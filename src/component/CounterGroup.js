@@ -15,11 +15,9 @@ class CounterGroup extends Component {
   };
 
   regenrateCounters = () => {
-    this.setState({
-      counterArr: new Array(parseInt(this.refs.countInput.value))
-        .fill(0)
-        .map(() => ({ count: 0, id: this.generateID() })),
-      counterSum: 0
+    this.props.dispatch({
+      type: "GENERATECOUNTERS",
+      payload: parseInt(this.refs.countInput.value)
     });
   };
 
