@@ -8,12 +8,12 @@ class Counter extends Component {
 
   increaseNumber = () => {
     this.props.onCounterValueChanged(1);
-    this.props.onClickIncreased(1);
+    this.props.onClickIncreased(1, this.props.id);
   };
 
   decreaseNumber = () => {
     this.props.onCounterValueChanged(-1);
-    this.props.onClickDecreased(1);
+    this.props.onClickDecreased(1, this.props.id);
   };
 
   render() {
