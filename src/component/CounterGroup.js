@@ -4,11 +4,17 @@ import Counter from "./Counter";
 class CounterGroup extends Component {
   constructor(props) {
     super(props);
-    this.state = { counterCount: this.props.defaultCount, counterSum: 0 };
+    this.state = {
+      counterSum: 0,
+      counterArr: new Array(parseInt(this.props.defaultCount)).fill(0)
+    };
   }
 
   regenrateCounters = () => {
-    this.setState({ counterCount: this.refs.countInput.value, counterSum: 0 });
+    this.setState({
+      counterArr: new Array(parseInt(this.refs.countInput.value)).fill(0),
+      counterSum: 0
+    });
   };
 
   counterUpdateCallback = changedNum => {
@@ -16,19 +22,14 @@ class CounterGroup extends Component {
   };
 
   render() {
-    let counters = [];
-    for (let count = 0; count < this.state.counterCount; count++) {
-      counters.push(
-        <Counter
-          key={count}
-          onCounterValueChanged={this.counterUpdateCallback}
-        />
-      );
-    }
-
     return (
       <div>
-        {counters}
+        {this.state.counterArr.map(id => (
+          <Counter
+            // key={id+1}
+            onCounterValueChanged={this.counterUpdateCallback}
+          />
+        ))}
         <input type="text" ref="countInput" />
         <button onClick={this.regenrateCounters}>
           Regenerate indicated Counters
