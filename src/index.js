@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import CounterGroup from "./component/CounterGroup";
+import CounterGroup from "./container/ContainerGroup";
 import reducer from "./reducer";
 import {createStore} from "redux";
 import { Provider } from "react-redux";
