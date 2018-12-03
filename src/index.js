@@ -9,7 +9,8 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
-    <CounterGroup defaultCount="3" />
+    <CounterGroup defaultCount="2" />
   </Provider>,
   document.getElementById("root")
 );
+
