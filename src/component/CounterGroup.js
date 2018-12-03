@@ -4,47 +4,13 @@ import { connect } from "react-redux";
 
 class CounterGroup extends Component {
   componentWillMount() {
-    this.props.dispatch({
-      type: "GENERATECOUNTERS",
-      payload: parseInt(this.props.defaultCount)
-    });
+    this.props.genrateCounters(this.props.defaultCount);
   }
 
-  generateID = () => {
-    return new Date().getTime() + Math.random();
-  };
-
   regenrateCounters = () => {
-    this.props.dispatch({
-      type: "GENERATECOUNTERS",
-      payload: parseInt(this.refs.countInput.value)
-    });
+    this.props.genrateCounters(this.refs.countInput.value);
 
-    this.props.dispatch({
-      type: "CLEARSUM"
-    });
-  };
-
-  counterUpdateCallback = changedNum => {
-    // this.setState({ counterSum: this.state.counterSum + changedNum });
-    this.props.dispatch({
-      type: "COUNTERSUM",
-      payload: changedNum
-    });
-  };
-
-  increaseNumber = (changedNum, id) => {
-    this.props.dispatch({
-      type: "INCREASE",
-      payload: { changedNum, id }
-    });
-  };
-
-  decreaseNumber = (changedNum, id) => {
-    this.props.dispatch({
-      type: "DECREASE",
-      payload: { changedNum, id }
-    });
+    this.props.clearCounterSum();
   };
 
   render() {
@@ -55,9 +21,9 @@ class CounterGroup extends Component {
             key={counterItem.id}
             id={counterItem.id}
             countValue={counterItem.count}
-            onCounterValueChanged={this.counterUpdateCallback}
-            onClickIncreased={this.increaseNumber}
-            onClickDecreased={this.decreaseNumber}
+            onCounterValueChanged={this.props.counterUpdateCallback}
+            onClickIncreased={this.props.increaseNumber}
+            onClickDecreased={this.props.decreaseNumber}
           />
         ))}
         <input type="text" ref="countInput" />
@@ -76,6 +42,34 @@ const mapStateToProps = state => ({
   counterArr: state.counterArr
 });
 
-connect(mapStateToProps)(CounterGroup);
+const mapDispatchToProps = dispatch => ({
+  decreaseNumber: (changedNum, id) =>
+    dispatch({
+      type: "INCREASE",
+      payload: { changedNum, id }
+    }),
+  increaseNumber: (changedNum, id) =>
+    dispatch({
+      type: "INCREASE",
+      payload: { changedNum, id }
+    }),
+  counterUpdateCallback: changedNum =>
+    dispatch({
+      type: "COUNTERSUM",
+      payload: changedNum
+    }),
+  genrateCounters: counterNum =>
+    dispatch({
+      type: "GENERATECOUNTERS",
+      payload: parseInt(counterNum)
+    }),
+  clearCounterSum: () =>
+    dispatch({
+      type: "CLEARSUM"
+    })
+});
 
-export default connect(mapStateToProps)(CounterGroup);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CounterGroup);
