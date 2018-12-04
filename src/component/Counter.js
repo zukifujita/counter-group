@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  increaseNumber = (id) => {
+  increaseNumber = id => {
     this.props.onIncreased(1, id);
     this.props.onCounterValueChanged(1);
   };
 
-  decreaseNumber = () => {
-    this.props.onDecreased(1);
+  decreaseNumber = id => {
+    this.props.onDecreased(1, id);
     this.props.onCounterValueChanged(-1);
   };
 
@@ -16,7 +16,7 @@ class Counter extends Component {
       <div>
         <button onClick={() => this.increaseNumber(this.props.id)}>+</button>
         <span>{this.props.counterNum}</span>
-        <button onClick={this.decreaseNumber}>-</button>
+        <button onClick={() => this.decreaseNumber(this.props.id)}>-</button>
       </div>
     );
   }

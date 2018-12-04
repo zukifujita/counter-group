@@ -36,10 +36,16 @@ class CounterGroup extends Component {
     this.setState({ counters: counters });
   };
 
-  decreaseUpdate = changedNum => {
-    this.setState({
-      counters: { number: this.state.counters.number - changedNum }
+  decreaseUpdate = (changedNum, id) => {
+    const counters = this.state.counters.map(counterItem => {
+      if (counterItem.id === id) {
+        return { number: counterItem.number - changedNum, id: id };
+      } else {
+        return counterItem;
+      }
     });
+
+    this.setState({ counters: counters });
   };
 
   render() {
@@ -48,6 +54,7 @@ class CounterGroup extends Component {
       <div>
         {this.state.counters.map(counterItem => (
           <Counter
+            key={counterItem.id}
             id={counterItem.id}
             onCounterValueChanged={this.counterUpdateCallback}
             onIncreased={this.increaseUpdate}
