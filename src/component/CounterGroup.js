@@ -6,7 +6,9 @@ class CounterGroup extends Component {
     super(props);
     this.state = {
       counterSum: 0,
-      count: 0,
+      counters: new Array(parseInt(this.props.defaultCount)).fill(0).map(() => {
+        return { number: 0, id: new Date().getTime + Math.random() };
+      }),
       counterArr: new Array(parseInt(this.props.defaultCount)).fill(0)
     };
   }
@@ -22,23 +24,34 @@ class CounterGroup extends Component {
     this.setState({ counterSum: this.state.counterSum + changedNum });
   };
 
-  increaseUpdate = changedNum => {
-    this.setState({ count: this.state.count + changedNum });
+  increaseUpdate = (changedNum, id) => {
+    const counters = this.state.counters.map(counterItem => {
+      if (counterItem.id === id) {
+        return { number: counterItem.number + changedNum, id: id };
+      } else {
+        return counterItem;
+      }
+    });
+
+    this.setState({ counters: counters });
   };
 
   decreaseUpdate = changedNum => {
-    this.setState({ count: this.state.count - changedNum });
+    this.setState({
+      counters: { number: this.state.counters.number - changedNum }
+    });
   };
 
   render() {
+    console.log(this.state.counters);
     return (
       <div>
-        {this.state.counterArr.map(id => (
+        {this.state.counters.map(counterItem => (
           <Counter
-            key={new Date().getTime() + Math.random()}
+            id={counterItem.id}
             onCounterValueChanged={this.counterUpdateCallback}
             onIncreased={this.increaseUpdate}
-            counterNum={this.state.count}
+            counterNum={counterItem.number}
             onDecreased={this.decreaseUpdate}
           />
         ))}

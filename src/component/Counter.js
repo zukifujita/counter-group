@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-
-  increaseNumber = () => {
-    this.props.onIncreased(1);
+  increaseNumber = (id) => {
+    this.props.onIncreased(1, id);
     this.props.onCounterValueChanged(1);
   };
 
@@ -15,7 +14,7 @@ class Counter extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.increaseNumber}>+</button>
+        <button onClick={() => this.increaseNumber(this.props.id)}>+</button>
         <span>{this.props.counterNum}</span>
         <button onClick={this.decreaseNumber}>-</button>
       </div>
