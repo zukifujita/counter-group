@@ -6,6 +6,7 @@ class CounterGroup extends Component {
     super(props);
     this.state = {
       counterSum: 0,
+      count: 0,
       counterArr: new Array(parseInt(this.props.defaultCount)).fill(0)
     };
   }
@@ -21,6 +22,14 @@ class CounterGroup extends Component {
     this.setState({ counterSum: this.state.counterSum + changedNum });
   };
 
+  increaseUpdate = changedNum => {
+    this.setState({ count: this.state.count + changedNum });
+  };
+
+  decreaseUpdate = changedNum => {
+    this.setState({ count: this.state.count - changedNum });
+  };
+
   render() {
     return (
       <div>
@@ -28,6 +37,9 @@ class CounterGroup extends Component {
           <Counter
             key={new Date().getTime() + Math.random()}
             onCounterValueChanged={this.counterUpdateCallback}
+            onIncreased={this.increaseUpdate}
+            counterNum={this.state.count}
+            onDecreased={this.decreaseUpdate}
           />
         ))}
         <input type="text" ref="countInput" />
