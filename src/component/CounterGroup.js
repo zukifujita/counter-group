@@ -6,7 +6,7 @@ class CounterGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // counterSum: 0,
+      // counterSum: 0,   move this state to ./reducer which can do the data logic and return the new state to mapStateToProps
       counterArr: new Array(parseInt(this.props.defaultCount))
         .fill(0)
         .map(() => ({ count: 0, id: this.generateID() }))
@@ -28,10 +28,10 @@ class CounterGroup extends Component {
 
   counterUpdateCallback = changedNum => {
     // this.setState({ counterSum: this.state.counterSum + changedNum });
-    this.props.dispatch({
+    this.props.dispatch({ //this dispatch will wuto inject by connect() method
       type: "COUNTERSUM",
       payload: changedNum
-    });
+    }); //{type: "", payload: xxx} named action, it will bo translated to ./reducer
   };
 
   increaseNumber = (changedNum, id) => {
@@ -84,8 +84,10 @@ class CounterGroup extends Component {
 
 const mapStateToProps = state => ({
   counterSum: state.counterSum
-});
+}); 
+// counterSum is a prop in CounterGroup, it will give counterSum a new value of state.counterSum whitch come from ./reducer switch return
+// you try to imagine counterSum will be passed to this.props.counterSum in CounterGroup like the result of <CounterGroup counterSum={state.counterSum}/>
 
 connect(mapStateToProps)(CounterGroup)
 
-export default connect(mapStateToProps)(CounterGroup);
+export default connect(mapStateToProps)(CounterGroup);//let CounterGroup and Redux know each other
