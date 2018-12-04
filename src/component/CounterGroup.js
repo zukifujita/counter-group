@@ -8,14 +8,17 @@ class CounterGroup extends Component {
       counterSum: 0,
       counters: new Array(parseInt(this.props.defaultCount)).fill(0).map(() => {
         return { number: 0, id: new Date().getTime + Math.random() };
-      }),
-      counterArr: new Array(parseInt(this.props.defaultCount)).fill(0)
+      })
     };
   }
 
   regenrateCounters = () => {
     this.setState({
-      counterArr: new Array(parseInt(this.refs.countInput.value)).fill(0),
+      counters: new Array(parseInt(this.refs.countInput.value))
+        .fill(0)
+        .map(() => {
+          return { number: 0, id: new Date().getTime + Math.random() };
+        }),
       counterSum: 0
     });
   };
